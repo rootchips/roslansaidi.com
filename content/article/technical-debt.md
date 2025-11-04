@@ -78,4 +78,3 @@ When it’s okay
 
 Rule
 - Technical debt = shortcut today → headache tomorrow.
-<br><br>
