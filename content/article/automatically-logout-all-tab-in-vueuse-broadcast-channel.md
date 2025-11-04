@@ -1,5 +1,5 @@
 ---
-title: "Automatically Logout All Tab Using Nuxt"
+title: "Automatically Logout All Tab Using VueUse Broadcast Channel with Pinia"
 description: Keep every tab in sync when a user signs out — one logout closes them all in Nuxt using Broadcast Channel + Pinia.
 date: 2024-07-26
 image: https://cdn.pixabay.com/photo/2022/10/28/08/11/woman-7552579_960_720.jpg
