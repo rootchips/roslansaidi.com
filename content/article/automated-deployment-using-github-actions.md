@@ -33,10 +33,10 @@ __Our goal is to automate deployment so that every push or rollback is applied a
 Here are the steps to build __an automated deployment process__.
 <br><br>
 
-### Step 1 - Login to the server
+### Login to the server
 Login the server as myuser.
 <br><br>
-### Step 2 - Generate two separate SSH keys
+### Generate two separate SSH keys
 In the home directory, create two separate SSH keys: one dedicated for the API and another for the frontend application.
 
 ```sh
@@ -60,7 +60,7 @@ Now you will have two key pairs.
 ```
 <br>
 
-### Step 3 - Create a configuration file
+### Create a configuration file
 In the SSH folder, create a configuration file for the GitHub environments:
 ```sh
 $ cd ~/.ssh
@@ -90,7 +90,7 @@ This configuration defines two SSH hosts:
 Later, we will set the remote URLs of the repositories to use these hosts, making it easier to separate API and frontend access.
 <br><br>
 
-### Step 4 - Set the remote URL
+### Set the remote URL
 Assuming the application is organized into two main components API and Frontend, their directories would typically look like this:
 - The API service is located at: `/srv/apps/<your-application>/api`
 - The Frontend service is located at: `/srv/apps/<your-application>/web`
@@ -106,7 +106,7 @@ $ git remote set-url origin git@github.com-web:<username>/<web-repository>.git
 For configuring your remote URLs, you need to use the host aliases defined in `~/.ssh/config`. This ensures Git knows which SSH key to use for each repository.
 <br><br>
 
-### Step 5 - Set up a deploy key for each repository
+### Set up a deploy key for each repository
 Next, you need to copy both the API and Frontend SSH keys from the server, and add them to their respective repositories. Make sure each repository has the correct key pasted into its deploy key settings.
 
 Copy the public keys
@@ -128,7 +128,7 @@ You need to paste the API key into the API repository, and the Frontend key into
 - Click __Add key__
 <br><br>
 
-### Step 6 - Check the connection between server and Github
+### Check the connection between server and Github
 You need to test the SSH connections before proceeding to the next steps:
 
 ```sh
@@ -152,7 +152,7 @@ $ chmod 700 ~/.ssh
 ```
 <br><br>
 
-### Step 7 - Create and register Github runners
+### Create and register Github runners
 Next, You can create a runner for either a __personal__ or an __organization__ account.
 
 For a personal repository:
@@ -241,7 +241,7 @@ $ sudo ./svc.sh status
 ```
 <br><br>
 
-### Step 8 - Configure passwordless sudo for our user
+### Configure passwordless sudo for our user
 Of course, every time we execute certain commands, we need to use `sudo`, which normally asks for a password. Commands like `chown`, `chmod`, `chgrp`, or restarting services all require `sudo` privileges, and by default, it always prompts.
 
 That’s fine when we’re on the server ourselves, but in an automated deployment (like GitHub Actions with __deploy.yml__, we'll explain later), there’s no way to type a password. The job would just fail.
@@ -264,7 +264,7 @@ myuser ALL=(ALL) NOPASSWD: /bin/chown, /bin/chmod, /bin/chgrp, /usr/bin/find, /u
 ```
 <br><br>
 
-### Step 9 - Create a workflow for each repository
+### Create a workflow for each repository
 Next, we need to create a workflow file inside `.github/workflows/deploy.yml`
 
 Below is an example setup for both the API and Frontend, covering staging and production environments.
@@ -488,9 +488,9 @@ Note that the __runs-on__ section must include __self-hosted__ and match the lab
 
 The __cancel-in-progress__ option should be set to __true__ if you want new jobs to replace any currently running job, ensuring the latest one runs immediately.
 
-The use of `sudo` won’t prompt for a password here because we already configured passwordless `sudo` in __Step 8__.
+The use of `sudo` won’t prompt for a password here because we already configured passwordless `sudo` in [Step 8](#configure-passwordless-sudo-for-our-user).
 <br><br>
 
-### Step 10 - Test run
+### Test run
 Finally, to test the setup, push some code to the `staging` branch. GitHub Actions will automatically trigger the deployment workflow and update the server. For more details, we can open the Actions tab in the repository to view the workflow logs and track the status of each run.
 <br><br>

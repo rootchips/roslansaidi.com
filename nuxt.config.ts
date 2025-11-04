@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
@@ -16,20 +15,18 @@ export default defineNuxtConfig({
     quality: 80
   },
 
-  imports: {
-    dirs: ['node_modules/@nuxt/image/dist/runtime']
-  },
-
   css: ['~/assets/css/main.css'],
 
   compatibilityDate: '2024-11-01',
 
-  nitro: { preset: 'github-pages' },
-  routeRules: { 
-      '/**': { 
-            prerender: true 
-      } 
-},
+  nitro: {
+    preset: 'github-pages',
+  },
+
+  routeRules: {
+    '/**': { prerender: true }
+  },
+
   eslint: {
     config: {
       stylistic: {

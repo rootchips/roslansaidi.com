@@ -18,7 +18,7 @@ This concept works like a **publish and subscribe** system — one tab publishes
 
 ---
 
-## Step 1 — Install VueUse
+## Install VueUse
 
 First, install [VueUse](https://vueuse.org/):
 
@@ -28,7 +28,7 @@ npm i @vueuse/core
 
 ---
 
-## Step 2 — Publish a Logout Message in the Auth Store (Pinia)
+## Publish a Logout Message in the Auth Store (Pinia)
 
 In your `auth` store, create a broadcast channel and send a logout signal when the user logs out:
 
@@ -53,7 +53,7 @@ export const useAuthStore = defineStore('auth', {
 
 ---
 
-## Step 3 — Subscribe to the Logout Message in App.vue
+## Subscribe to the Logout Message in App.vue
 
 Here, we subscribe to a logout message and monitor the data to check whether the published message is received or not.
 

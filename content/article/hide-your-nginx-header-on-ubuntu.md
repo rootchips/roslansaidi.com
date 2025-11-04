@@ -28,7 +28,7 @@ sudo apt install software-properties-common nginx=stable
 
 ---
 
-## Step 2 — Add NGINX Repository
+## Add NGINX Repository
 
 Now, add the official NGINX PPA repository:
 
@@ -38,7 +38,7 @@ sudo add-apt-repository -y ppa:nginx/$nginx
 
 ---
 
-## Step 3 — Update the Package Lists
+## Update the Package Lists
 
 Next, update your system package lists and upgrade your packages:
 
@@ -49,19 +49,19 @@ sudo apt dist-upgrade
 
 ---
 
-## Step 4 — Check NGINX Version
+## Check NGINX Version
 
 Verify that NGINX was installed or upgraded successfully:
 
 ```bash
-NGINX -v
+nginx -v
 ```
 
 ---
 
-## Step 5 — Install `NGINX-extras`
+## Install `nginx-extras`
 
-The `NGINX-extras` package provides additional modules, including the one required for custom headers.
+The `nginx-extras` package provides additional modules, including the one required for custom headers.
 
 ```bash
 sudo apt install nginx-extras
@@ -69,7 +69,7 @@ sudo apt install nginx-extras
 
 ---
 
-## Step 6 — Edit the NGINX Configuration File
+## Edit the NGINX Configuration File
 
 Open your main NGINX configuration file in your preferred editor:
 
@@ -79,7 +79,7 @@ sudo vim /etc/nginx/nginx.conf
 
 ---
 
-## Step 7 — Add Modules and Custom Headers
+## Add Modules and Custom Headers
 
 Add the following **module** at the top of your configuration file (outside of any block):
 
@@ -99,7 +99,7 @@ You can replace `"Your Server"` with any label you prefer (or even an empty stri
 
 ---
 
-## Step 8 — Test and Restart NGINX
+## Test and Restart NGINX
 
 Before restarting, always test your configuration to ensure there are no syntax errors:
 
