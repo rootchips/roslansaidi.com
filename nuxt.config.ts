@@ -10,8 +10,14 @@ export default defineNuxtConfig({
     'motion-v/nuxt'
   ],
 
-  devtools: {
-    enabled: true
+  image: {
+    provider: 'ipx',
+    format: ['webp', 'png', 'jpeg'],
+    quality: 80
+  },
+
+  imports: {
+    dirs: ['node_modules/@nuxt/image/dist/runtime']
   },
 
   css: ['~/assets/css/main.css'],
