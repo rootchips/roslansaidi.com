@@ -2,14 +2,15 @@
   "name": "chips",
   "private": true,
   "type": "module",
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "typecheck": "nuxt typecheck"
+ "scripts": {
+  "build": "nuxt build",
+  "generate": "nuxt generate",
+  "dev": "nuxt dev",
+  "preview": "nuxt preview",
+  "postinstall": "nuxt prepare",
+  "lint": "eslint .",
+  "lint:fix": "eslint . --fix",
+  "typecheck": "nuxt typecheck"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.71",
