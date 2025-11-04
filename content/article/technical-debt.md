@@ -1,9 +1,9 @@
 ---
 title: "Technical Debt"
 description: A beginner-friendly look at how coding shortcuts today can create bigger problems tomorrow.
-date: 2025-03-23
+date: 2025-11-04
 image: https://images.unsplash.com/photo-1624811532681-e58a7e25f273?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170
-minRead: 8
+minRead: 1
 author:
   name: Roslan Saidi
   avatar:
@@ -57,7 +57,7 @@ __Software Development analogies__
 🟰 `Debt` = more work every time change happens.
 <br><br>
 
-# Summary
+## Summary
 
 What is it?
 - Shortcuts in code/design to save time now.
