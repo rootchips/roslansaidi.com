@@ -5,20 +5,31 @@ import { findPageBreadcrumb } from '@nuxt/content/utils'
 
 const route = useRoute()
 
+const collection = 'projects'
+
 const { data: page } = await useAsyncData(route.path, () =>
-      queryCollection('projects').path(route.path).first()
+      queryCollection(collection).path(route.path).first()
 )
-if (!page.value) throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+
+if (!page.value) {
+      throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+}
+
 const { data: surround } = await useAsyncData(`${route.path}-surround`, () =>
-      queryCollectionItemSurroundings('projects', route.path, {
+      queryCollectionItemSurroundings(collection, route.path, {
             fields: ['description']
       })
 )
 
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation', ref([]))
-const projectsNavigation = computed(() => navigation.value.find(item => item.path === '/projects')?.children || [])
+const projectsNavigation = computed(() =>
+      navigation.value.find(item => item.path === `/${collection}`)?.children || []
+)
 
-const breadcrumb = computed(() => mapContentNavigation(findPageBreadcrumb(projectsNavigation?.value, page.value?.path)).map(({ icon, ...link }) => link))
+const breadcrumb = computed(() =>
+      mapContentNavigation(findPageBreadcrumb(projectsNavigation.value, page.value?.path))
+            .map(({ icon, ...link }) => link)
+)
 
 if (page.value.image) {
       defineOgImage({ url: page.value.image })
@@ -41,14 +52,6 @@ useSeoMeta({
 })
 
 const articleLink = computed(() => `${window?.location}`)
-
-const formatDate = (dateString: string) => {
-      return new Date(dateString).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-      })
-}
 </script>
 
 <template>
@@ -71,7 +74,8 @@ const formatDate = (dateString: string) => {
                         </div>
                         <UPageBody class="max-w-3xl mx-auto">
                               <ContentRenderer v-if="page.body" :value="page" />
-                              <ULink v-if="page.url" :to="page.url" target="_blank" rel="noopener noreferrer" class="hover text-sm text-primary flex items-center">
+                              <ULink v-if="page.url" :to="page.url" target="_blank" rel="noopener noreferrer"
+                                    class="hover text-sm text-primary flex items-center">
                                     Go to website
                                     <UIcon name="i-lucide-arrow-right"
                                           class="size-4 text-primary transition-all opacity-0 group-hover:translate-x-1 group-hover:opacity-100" />
