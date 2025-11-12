@@ -7,51 +7,53 @@ const route = useRoute()
 
 const collection = 'works'
 
-const { data: page } = await useAsyncData(route.path, () =>
-      queryCollection(collection).path(route.path).first()
+const normalizedPath = computed(() => route.path.replace(/\/+$/, ''))
+
+const { data: page } = await useAsyncData(normalizedPath.value, () =>
+  queryCollection(collection).path(normalizedPath.value).first()
 )
 
 if (!page.value) {
-      throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () =>
-      queryCollectionItemSurroundings(collection, route.path, {
-            fields: ['description']
-      })
+const { data: surround } = await useAsyncData(`${normalizedPath.value}-surround`, () =>
+  queryCollectionItemSurroundings(collection, normalizedPath.value, {
+    fields: ['description']
+  })
 )
 
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation', ref([]))
 const worksNavigation = computed(() =>
-      navigation.value.find(item => item.path === `/${collection}`)?.children || []
+  navigation.value.find(item => item.path === `/${collection}`)?.children || []
 )
 
 const breadcrumb = computed(() =>
-      mapContentNavigation(findPageBreadcrumb(worksNavigation.value, page.value?.path))
-            .map(({ icon, ...link }) => link)
+  mapContentNavigation(findPageBreadcrumb(worksNavigation.value, page.value?.path))
+    .map(({ icon, ...link }) => link)
 )
 
 if (page.value.image) {
-      defineOgImage({ url: page.value.image })
+  defineOgImage({ url: page.value.image })
 } else {
-      defineOgImageComponent('Blog', {
-            headline: breadcrumb.value.map(item => item.label).join(' > ')
-      }, {
-            fonts: ['Geist:400', 'Geist:600']
-      })
+  defineOgImageComponent('Blog', {
+    headline: breadcrumb.value.map(item => item.label).join(' > ')
+  }, {
+    fonts: ['Geist:400', 'Geist:600']
+  })
 }
 
 const title = page.value?.seo?.title || page.value?.title
 const description = page.value?.seo?.description || page.value?.description
 
 useSeoMeta({
-      title,
-      description,
-      ogDescription: description,
-      ogTitle: title
+  title,
+  description,
+  ogDescription: description,
+  ogTitle: title
 })
 
-const articleLink = computed(() => `${window?.location}`)
+const workLink = computed(() => window?.location.href.replace(/\/+$/, ''))
 </script>
 
 <template>
@@ -83,7 +85,7 @@ const articleLink = computed(() => `${window?.location}`)
 
                               <div class="flex items-center justify-end gap-2 text-sm text-muted">
                                     <UButton size="sm" variant="link" color="neutral" label="Copy link"
-                                          @click="copyToClipboard(articleLink, 'Article link copied to clipboard')" />
+                                          @click="copyToClipboard(workLink, 'Article link copied to clipboard')" />
                               </div>
                               <UContentSurround :surround />
                         </UPageBody>

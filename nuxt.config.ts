@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     options: {
       strict: true,
     },
+    trailingSlash: false,
   },
 
   routeRules: {
