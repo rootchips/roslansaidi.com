@@ -71,7 +71,7 @@ const formatDate = (dateString: string) => {
                         </div>
                         <UPageBody class="max-w-3xl mx-auto">
                               <ContentRenderer v-if="page.body" :value="page" />
-                              <ULink v-if="page.url" :to="page.url" class="hover text-sm text-primary flex items-center">
+                              <ULink v-if="page.url" :to="page.url" target="_blank" rel="noopener noreferrer" class="hover text-sm text-primary flex items-center">
                                     Go to website
                                     <UIcon name="i-lucide-arrow-right"
                                           class="size-4 text-primary transition-all opacity-0 group-hover:translate-x-1 group-hover:opacity-100" />
