@@ -7,16 +7,18 @@ const route = useRoute()
 
 const collection = 'articles'
 
-const { data: page } = await useAsyncData(route.path, () =>
-      queryCollection(collection).path(route.path).first()
+const normalizedPath = computed(() => route.path.replace(/\/+$/, ''))
+
+const { data: page } = await useAsyncData(normalizedPath.value, () =>
+      queryCollection(collection).path(normalizedPath.value).first()
 )
 
 if (!page.value) {
       throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () =>
-      queryCollectionItemSurroundings(collection, route.path, {
+const { data: surround } = await useAsyncData(`${normalizedPath.value}-surround`, () =>
+      queryCollectionItemSurroundings(collection, normalizedPath.value, {
             fields: ['description']
       })
 )
