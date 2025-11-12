@@ -5,7 +5,7 @@ import { findPageBreadcrumb } from '@nuxt/content/utils'
 
 const route = useRoute()
 
-const collection = 'projects'
+const collection = 'works'
 
 const { data: page } = await useAsyncData(route.path, () =>
       queryCollection(collection).path(route.path).first()
@@ -22,12 +22,12 @@ const { data: surround } = await useAsyncData(`${route.path}-surround`, () =>
 )
 
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation', ref([]))
-const projectsNavigation = computed(() =>
+const worksNavigation = computed(() =>
       navigation.value.find(item => item.path === `/${collection}`)?.children || []
 )
 
 const breadcrumb = computed(() =>
-      mapContentNavigation(findPageBreadcrumb(projectsNavigation.value, page.value?.path))
+      mapContentNavigation(findPageBreadcrumb(worksNavigation.value, page.value?.path))
             .map(({ icon, ...link }) => link)
 )
 
@@ -58,9 +58,9 @@ const articleLink = computed(() => `${window?.location}`)
       <UMain class="mt-20 px-2">
             <UContainer class="relative min-h-screen">
                   <UPage v-if="page">
-                        <ULink to="/projects" class="text-sm flex items-center gap-1">
+                        <ULink to="/works" class="text-sm flex items-center gap-1">
                               <UIcon name="lucide:chevron-left" />
-                              Back to projects
+                              Back to works
                         </ULink>
                         <div class="flex flex-col gap-3 mt-8">
                               <NuxtImg :src="page.image" :alt="page.title"

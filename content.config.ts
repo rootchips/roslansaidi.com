@@ -33,9 +33,9 @@ const createAuthorSchema = () =>
 
 export default defineContentConfig({
   collections: {
-    projects: defineCollection({
+    works: defineCollection({
       type: "page",
-      source: "projects/*.md",
+      source: "works/*.md",
       schema: z.object({
         url: z.string(),
         date: z.date(),
@@ -55,7 +55,7 @@ export default defineContentConfig({
     pages: defineCollection({
       type: "page",
       source: [
-        { include: 'projects.yml' },
+        { include: 'works.yml' },
         { include: 'article.yml' }
       ],
       schema: z.object({

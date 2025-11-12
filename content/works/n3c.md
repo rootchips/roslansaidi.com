@@ -1,7 +1,7 @@
 ---
 title: National Construction Cost Centre (N3C)
 description: A CIDB Malaysia initiative providing a centralized database of construction cost data and cost index.
-image: /projects/n3c/home.png # Example image of dashboards/finance app
+image: /works/n3c/home.png # Example image of dashboards/finance app
 url: "https://n3c.cidb.gov.my"
 tags: ["Laravel", "Nuxt", "Redis"]
 date: "2024"
