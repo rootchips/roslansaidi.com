@@ -1,5 +1,5 @@
 ---
-title: AWETA 2018
+title: AWETA2018
 description: A national project to empower women to excel through extreme sports.
 image: /projects/aweta/home.gif # Example image of dashboards/finance app
 url:
