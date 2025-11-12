@@ -1,11 +1,4 @@
 export default defineNuxtConfig({
-  app: {
-    router: {
-      options: {
-        strict: true,
-      },
-    },
-  },
   modules: [
     "@nuxt/eslint",
     "@nuxt/image",
@@ -31,6 +24,7 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    "/**/": { redirect: { to: (url) => url.slice(0, -1), statusCode: 301 } },
     "/**": { prerender: true },
   },
 
