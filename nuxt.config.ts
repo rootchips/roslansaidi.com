@@ -12,47 +12,29 @@ export default defineNuxtConfig({
     "nuxt-og-image",
     "motion-v/nuxt",
   ],
-
-  css: ["~/assets/css/main.css"],
-
   image: {
-    provider: "none",
+    provider: 'none',
     quality: 80,
     format: ["webp", "png", "jpeg"],
+    static: true,
+    staticFilename: "[name]-[width].[ext]",
   },
-
+  css: ["~/assets/css/main.css"],
   compatibilityDate: "2024-11-01",
-
   nitro: {
     preset: "github-pages",
     static: true,
-    serveStatic: true,
     prerender: {
       crawlLinks: true,
       routes: ["/"],
     },
-    output: {
-      dir: ".output",
-      fallback: "404.html",
-      structure: "flat",
-    },
   },
-
-  vite: {
-    publicDir: "public",
-    server: {
-      fs: { allow: ["public"] },
-    },
-  },
-
   router: {
     trailingSlash: false,
   },
-
   routeRules: {
     "/**": { prerender: true },
   },
-
   eslint: {
     config: {
       stylistic: {
