@@ -1,4 +1,7 @@
 export default defineNuxtConfig({
+  app: {
+    baseURL: "/",
+  },
   modules: [
     "@nuxt/eslint",
     "@nuxt/image",
@@ -10,9 +13,9 @@ export default defineNuxtConfig({
   ],
 
   image: {
-    provider: "ipx",
-    format: ["webp", "png", "jpeg"],
+    provider: "none", // no IPX runtime, no provider needed
     quality: 80,
+    format: ["webp", "png", "jpeg"],
   },
 
   css: ["~/assets/css/main.css"],
@@ -21,10 +24,19 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: "github-pages",
+    prerender: {
+      crawlLinks: true,
+      routes: ["/"],
+    },
+    static: true,
+  },
+  router: {
+    options: {
+      strict: true,
+    },
   },
 
   routeRules: {
-    "/**/": { redirect: { to: (url) => url.slice(0, -1), statusCode: 301 } },
     "/**": { prerender: true },
   },
 
