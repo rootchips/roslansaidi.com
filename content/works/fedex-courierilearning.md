@@ -1,7 +1,7 @@
 ---
 title: FedEx Courier I-Learning
 description: An internal online training system developed for FedEx employees, specifically couriers and operations staff.
-image: /works/fedex/home.png # Example image of dashboards/finance app
+image: /images/works/fedex/home.png # Example image of dashboards/finance app
 url:
 tags: ["Laravel", "Nuxt", "Redis"]
 date: "2022"

@@ -1,7 +1,7 @@
 ---
 title: AWETA2018
 description: A national project to empower women to excel through extreme sports.
-image: /works/aweta/home.gif # Example image of dashboards/finance app
+image: /images/works/aweta/home.gif # Example image of dashboards/finance app
 url:
 tags: ["Laravel", "Nuxt", "Redis"]
 date: "2018"

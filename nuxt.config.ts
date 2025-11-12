@@ -2,6 +2,7 @@ export default defineNuxtConfig({
   app: {
     baseURL: "/",
   },
+
   modules: [
     "@nuxt/eslint",
     "@nuxt/image",
@@ -12,28 +13,39 @@ export default defineNuxtConfig({
     "motion-v/nuxt",
   ],
 
+  css: ["~/assets/css/main.css"],
+
   image: {
-    provider: "none", // no IPX runtime, no provider needed
+    provider: "none",
     quality: 80,
     format: ["webp", "png", "jpeg"],
   },
-
-  css: ["~/assets/css/main.css"],
 
   compatibilityDate: "2024-11-01",
 
   nitro: {
     preset: "github-pages",
+    static: true,
+    serveStatic: true,
     prerender: {
       crawlLinks: true,
       routes: ["/"],
     },
-    static: true,
-  },
-  router: {
-    options: {
-      strict: true,
+    output: {
+      dir: ".output",
+      fallback: "404.html",
+      structure: "flat",
     },
+  },
+
+  vite: {
+    publicDir: "public",
+    server: {
+      fs: { allow: ["public"] },
+    },
+  },
+
+  router: {
     trailingSlash: false,
   },
 
