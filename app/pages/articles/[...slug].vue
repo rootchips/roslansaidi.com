@@ -5,7 +5,7 @@ import { findPageBreadcrumb } from '@nuxt/content/utils'
 
 const route = useRoute()
 
-const collection = 'article'
+const collection = 'articles'
 
 const { data: page } = await useAsyncData(route.path, () =>
       queryCollection(collection).path(route.path).first()

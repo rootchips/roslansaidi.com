@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { data: page } = await useAsyncData('article-page', () => {
-  return queryCollection('pages').path('/article').first()
+const { data: page } = await useAsyncData('articles-page', () => {
+  return queryCollection('pages').path('/articles').first()
 })
 if (!page.value) {
   throw createError({
@@ -9,8 +9,8 @@ if (!page.value) {
     fatal: true
   })
 }
-const { data: posts } = await useAsyncData('article', () =>
-  queryCollection('article').order('date', 'DESC').all()
+const { data: posts } = await useAsyncData('articles', () =>
+  queryCollection('articles').order('date', 'DESC').all()
 )
 if (!posts.value) {
   throw createError({

@@ -42,9 +42,9 @@ export default defineContentConfig({
         image: z.string().nonempty().editor({ input: "media" }),
       }),
     }),
-    article: defineCollection({
+    articles: defineCollection({
       type: "page",
-      source: "article/*.md",
+      source: "articles/*.md",
       schema: z.object({
         minRead: z.number(),
         date: z.date(),
@@ -56,7 +56,7 @@ export default defineContentConfig({
       type: "page",
       source: [
         { include: 'works.yml' },
-        { include: 'article.yml' }
+        { include: 'articles.yml' }
       ],
       schema: z.object({
         links: z.array(createButtonSchema()),
