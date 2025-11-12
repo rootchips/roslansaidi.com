@@ -6,7 +6,7 @@ defineProps<{
 }>()
 
 const { data: posts } = await useAsyncData('index-article', () =>
-  queryCollection('article').order('date', 'DESC').limit(3).all()
+  queryCollection('articles').order('date', 'DESC').limit(3).all()
 )
 if (!posts.value) {
   throw createError({ statusCode: 404, statusMessage: 'article posts not found', fatal: true })
