@@ -11,9 +11,10 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "nuxt-og-image",
     "motion-v/nuxt",
+    "nuxt-gtag",
   ],
   image: {
-    provider: 'none',
+    provider: "none",
     quality: 80,
     format: ["webp", "png", "jpeg"],
     static: true,
@@ -41,6 +42,12 @@ export default defineNuxtConfig({
         commaDangle: "never",
         braceStyle: "1tbs",
       },
+    },
+  },
+  gtag: {
+    id: "G-2S3LXEED4B",
+    config: {
+      send_page_view: true,
     },
   },
 });
