@@ -45,10 +45,7 @@ useSeoMeta({
         container: '!pt-0'
       }"
     >
-      <MDC
-        :value="page.content"
-        unwrap="p"
-      />
+      <MDC :value="page.content" />
     </UPageSection>
   </UPage>
 </template>

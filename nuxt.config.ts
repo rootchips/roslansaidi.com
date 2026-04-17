@@ -55,6 +55,9 @@ export default defineNuxtConfig({
     staticFilename: "[name]-[width].[ext]",
   },
   css: ["~/assets/css/main.css"],
+  experimental: {
+    emitRouteChunkError: "automatic-immediate"
+  },
   compatibilityDate: "2024-11-01",
   nitro: {
     preset: "github-pages",
