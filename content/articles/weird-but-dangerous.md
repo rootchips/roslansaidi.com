@@ -19,7 +19,7 @@ receive do
 end
 ```
 
-Kinda looks simple. But the weird part is, if the mailbox already has many other messages that do not match `{:ok, data}`, Elixir will scan through them one by one until it finds the matching one. Those unmatched messages are not removed. So over time, the process mailbox can fill with useless messages, and every receive becomes slower. That is what makes it dangerous:
+Kinda looks simple. But the weird part is, if the mailbox already has many other messages that do not match `{:ok, data}`, Elixir will scan through them one by one until it finds the matching one. Those unmatched messages are not removed. So over time, the process mailbox can fill with useless messages and every receive becomes slower. That is what makes it dangerous:
 the code looks correct, but the process becomes slow quietly.
 
 ### Why some of us miss it?

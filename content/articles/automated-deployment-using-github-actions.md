@@ -11,7 +11,7 @@ author:
     alt: Roslan Saidi
 ---
 
-GitHub Actions runners support three operating systems: __MacOS__, __Linux__, and __Windows__. Ensure that your server environment is compatible with these platforms. __Assuming the application is already set up on a bare-metal server, you can proceed with the next steps__. A bare-metal setup means that all components such as the web server, dependencies, and services are installed and configured manually on the operating system.
+GitHub Actions runners support three operating systems: __MacOS__, __Linux__ and __Windows__. Ensure that your server environment is compatible with these platforms. __Assuming the application is already set up on a bare-metal server, you can proceed with the next steps__. A bare-metal setup means that all components such as the web server, dependencies and services are installed and configured manually on the operating system.
 
 __Our goal is to automate deployment so that every push or rollback is applied automatically, without the need to enter the server and run the commands manually.__
 
@@ -107,7 +107,7 @@ For configuring your remote URLs, you need to use the host aliases defined in `~
 <br><br>
 
 ### Set up a deploy key for each repository
-Next, you need to copy both the API and Frontend SSH keys from the server, and add them to their respective repositories. Make sure each repository has the correct key pasted into its deploy key settings.
+Next, you need to copy both the API and Frontend SSH keys from the server and add them to their respective repositories. Make sure each repository has the correct key pasted into its deploy key settings.
 
 Copy the public keys
 ```sh
@@ -119,7 +119,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICFS4/d7Atbkkasda9d39rewas0dasda90vdasdsad m
 $ cat ~/.ssh/id_web.pub
 ssh-ed25519 AAAAC3NzaC1lZDISEFSDFSF5AAAAICFS4/dGGGGAASDFVkasdaSDFSFSFs0dasdaSDFSF myuser@server
 ```
-You need to paste the API key into the API repository, and the Frontend key into the Frontend repository.
+You need to paste the API key into the API repository and the Frontend key into the Frontend repository.
 
 - Go to __your repository > Settings > Deploy Keys__ or `https://github.com/<username>/<repository>/settings/keys`
 - Click __Add deploy keys__
@@ -242,7 +242,7 @@ $ sudo ./svc.sh status
 <br><br>
 
 ### Configure passwordless sudo for our user
-Of course, every time we execute certain commands, we need to use `sudo`, which normally asks for a password. Commands like `chown`, `chmod`, `chgrp`, or restarting services all require `sudo` privileges, and by default, it always prompts.
+Of course, every time we execute certain commands, we need to use `sudo`, which normally asks for a password. Commands like `chown`, `chmod`, `chgrp`, or restarting services all require `sudo` privileges and by default, it always prompts.
 
 That’s fine when we’re on the server ourselves, but in an automated deployment (like GitHub Actions with __deploy.yml__, we'll explain later), there’s no way to type a password. The job would just fail.
 

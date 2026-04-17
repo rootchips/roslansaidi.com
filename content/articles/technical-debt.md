@@ -13,15 +13,15 @@ author:
 
 Technical debt means doing something quick today that saves time now but causes more work later.
 
-For example, imagine we need to send emails from our system. The “clean” way is to use a `job queue` (background process). That way, the user clicks a button, and the email is sent in the background without slowing the app.
+For example, imagine we need to send emails from our system. The “clean” way is to use a `job queue` (background process). That way, the user clicks a button and the email is sent in the background without slowing the app.
 
 But if we’re in a hurry, we might just send the email directly in the request (“fire email immediately”).
 - Short term: It works, no need to build a `job queue`. We save time.
-- Long term: Problems start — the app gets slower, users wait for email sending, and if many emails are fired at once, the server crashes. Now we must rewrite the whole email process later.
+- Long term: Problems start — the app gets slower, users wait for email sending and if many emails are fired at once, the server crashes. Now we must rewrite the whole email process later.
 
 That “extra work” is called technical debt.
 
-It’s just like borrowing money: you get quick cash now, but you must repay it later with interest. In coding, the “interest” is bugs, crashes, and slow development speed.
+It’s just like borrowing money: you get quick cash now, but you must repay it later with interest. In coding, the “interest” is bugs, crashes and slow development speed.
 
 Let me explain another analogy:
 <br><br>

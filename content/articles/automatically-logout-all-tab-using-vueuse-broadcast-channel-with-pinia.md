@@ -11,10 +11,10 @@ author:
     alt: Roslan Saidi
 ---
 
-Let's say you encounter a problem where you have opened your application in multiple tabs, and when you attempt to log out, only **one tab** gets logged out while the other tabs remain active.
+Let's say you encounter a problem where you have opened your application in multiple tabs and when you attempt to log out, only **one tab** gets logged out while the other tabs remain active.
 
 To solve this problem, you can use a **Broadcast Channel**.  
-This concept works like a **publish and subscribe** system — one tab publishes an event, and all others listen for it.
+This concept works like a **publish and subscribe** system — one tab publishes an event and all others listen for it.
 
 ---
 
