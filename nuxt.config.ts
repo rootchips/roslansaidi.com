@@ -13,6 +13,40 @@ export default defineNuxtConfig({
     "motion-v/nuxt",
     "nuxt-gtag",
   ],
+  content: {
+    build: {
+      markdown: {
+        highlight: {
+          theme: {
+            default: "github-light",
+            dark: "github-dark"
+          },
+          langs: [
+            "js",
+            "javascript",
+            "ts",
+            "typescript",
+            "json",
+            "html",
+            "css",
+            "vue",
+            "shell",
+            "sh",
+            "bash",
+            "zsh",
+            "yaml",
+            "yml",
+            "md",
+            "mdc",
+            "php",
+            "python",
+            "py",
+            "elixir"
+          ]
+        }
+      }
+    }
+  },
   image: {
     provider: "none",
     quality: 80,
