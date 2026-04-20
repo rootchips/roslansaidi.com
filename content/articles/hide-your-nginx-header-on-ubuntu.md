@@ -11,16 +11,17 @@ author:
     alt: Roslan Saidi
 ---
 
-Did you know you can hide your web server header?  
-So what’s the purpose of this approach?
+Did you know that your web server may be revealing information about itself in every HTTP response?
 
-I believe this is one of the best **security practices** — it helps obscure what web server you’re using, making it slightly harder for attackers to fingerprint your setup.
+By default, NGINX sends a Server header that can expose the web server software in use and sometimes even its version. While this does not secure your server on its own, reducing unnecessary disclosure is a good hardening practice.
+
+Masking or removing this header helps make fingerprinting your server slightly more difficult for attackers. It is a small step, but it fits well within a defense-in-depth approach.
 
 ---
 
 ## Step 1 — Upgrade NGINX to the Latest Stable
 
-To start, install the necessary dependencies and upgrade to the latest stable version of NGINX:
+First, install the required dependency and prepare your system:
 
 ```bash
 sudo apt install software-properties-common nginx=stable
@@ -30,7 +31,7 @@ sudo apt install software-properties-common nginx=stable
 
 ## Add NGINX Repository
 
-Now, add the official NGINX PPA repository:
+Next, add the official NGINX PPA repository:
 
 ```bash
 sudo add-apt-repository -y ppa:nginx/$nginx
@@ -40,7 +41,7 @@ sudo add-apt-repository -y ppa:nginx/$nginx
 
 ## Update the Package Lists
 
-Next, update your system package lists and upgrade your packages:
+Refresh your package index and upgrade installed packages:
 
 ```bash
 sudo apt update
@@ -51,7 +52,7 @@ sudo apt dist-upgrade
 
 ## Check NGINX Version
 
-Verify that NGINX was installed or upgraded successfully:
+Confirm that NGINX has been installed or upgraded successfully:
 
 ```bash
 nginx -v
@@ -61,7 +62,7 @@ nginx -v
 
 ## Install `nginx-extras`
 
-The `nginx-extras` package provides additional modules, including the one required for custom headers.
+The `nginx-extras` package includes additional modules, including the one needed to customize response headers.
 
 ```bash
 sudo apt install nginx-extras
@@ -71,7 +72,7 @@ sudo apt install nginx-extras
 
 ## Edit the NGINX Configuration File
 
-Open your main NGINX configuration file in your preferred editor:
+Open the main NGINX configuration file in your preferred editor:
 
 ```bash
 sudo vim /etc/nginx/nginx.conf
@@ -81,13 +82,13 @@ sudo vim /etc/nginx/nginx.conf
 
 ## Add Modules and Custom Headers
 
-Add the following **module** at the top of your configuration file (outside of any block):
+At the top of the configuration file, outside of any block, add:
 
 ```yaml
 load_module modules/ngx_http_headers_more_filter_module.so;
 ```
 
-Then, inside the **http block**, add the line below to customize your server header:
+Then, inside the `http` block, add:
 
 ```yaml
 http {
@@ -95,19 +96,21 @@ http {
 }
 ```
 
-You can replace `"Your Server"` with any label you prefer (or even an empty string if you want it completely blank).
+Replace `Your Server` with any value you want. You can also use a generic label if you prefer not to expose any meaningful server information.
 
 ---
 
 ## Test and Restart NGINX
 
-Before restarting, always test your configuration to ensure there are no syntax errors:
+Before restarting NGINX, check the configuration for syntax errors:
 
 ```bash
 sudo nginx -t
 ```
 
-If everything is OK, restart NGINX:
+If the test passes, continue with the restart.
+
+Apply the changes by restarting the NGINX service:
 
 ```bash
 sudo service nginx restart
@@ -120,14 +123,13 @@ sudo service nginx restart
 That’s it!<br>
 You’ve successfully hidden or customized your **NGINX server header**.
 
-This is a small but valuable hardening step for your web server’s security posture.  
-While it won’t make your server bulletproof, it helps minimize unnecessary information exposure — a fundamental part of **defense in depth**.
+This is a small but useful hardening measure. It will not make your server immune to attacks, but it helps reduce unnecessary information leakage and supports a stronger overall security posture.
 
 ---
 
 ### Bonus Tip
 
-To verify your change, run:
+To confirm the change, run:
 
 ```bash
 curl -I https://yourdomain.com
@@ -142,3 +144,7 @@ Server: Your Server
 instead of the default NGINX version header.
 
 ---
+
+### Final Note
+
+Hiding the Server header should be treated as a cosmetic security improvement, not a substitute for real protection. Keep your server secure by combining this with regular updates, proper firewall rules, secure configuration, TLS best practices and continuous monitoring.
