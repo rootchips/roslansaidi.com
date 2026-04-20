@@ -61,8 +61,8 @@ useSeoMeta({
                                                 class="size-4 text-primary transition-all opacity-0 group-hover:translate-x-1 group-hover:opacity-100" />
                                     </ULink>
                               </template>
-                              <img :src="work.image" :alt="work.title"
-                                    class="object-cover w-full h-48 rounded-lg">
+                              <NuxtImg :src="work.image" :alt="work.title" loading="lazy"
+                                    class="object-cover w-full h-48 rounded-lg" />
                         </UPageCard>
                   </Motion>
             </UPageSection>
