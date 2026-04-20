@@ -3,21 +3,27 @@ description: Insights into software development practices, cloud experience and 
 
 content: |
   I'm Roslan Saidi, a software engineer based in Malaysia. <br><br>
-
-  I enjoy building APIs, servers and web apps that are fast, reliable and easy to maintain.<br><br>
-
-  I like keeping things clean and reliable. I spend a lot of time on the backend side, setting up APIs, servers and deployments. Lately, I’ve been learning Go, just to see how far I can push my backend skills.<br><br>
-
-  When I’m not coding, I’m probably tweaking something on my setup or chilling with some music.<br><br>
+  I enjoy building APIs, servers and web apps that are fast, reliable and easy to maintain. Most of my time goes into backend work, especially around APIs, servers, deployments and making sure everything stays clean and dependable. Lately, I’ve been learning Go to push my backend skills further and explore a different way of building systems. When I’m not coding, I’m usually tweaking my setup or just relaxing with some music<br><br>.
 
   You can reach me on the internet:
-  * [Github](https://github.com/rootchips)
-  * [Telegram](https://t.me/chips)
-  * [X](https://x.com/rootchps)
-  * [Dev.to](https://dev.to/rootchips)
 
-  My eargasm playlists:
-  * [Spotify](https://open.spotify.com/user/rootchips)
+  <p>
+    <a href="https://github.com/rootchips" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+      <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+    </a>
+    <a href="https://x.com/rootchps" target="_blank" rel="noopener noreferrer" aria-label="X">
+      <img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" alt="X" />
+    </a>
+    <a href="https://t.me/chips" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+      <img src="https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram" />
+    </a>
+    <a href="https://dev.to/rootchips" target="_blank" rel="noopener noreferrer" aria-label="Dev.to">
+      <img src="https://img.shields.io/badge/Dev.to-0A0A0A?style=for-the-badge&logo=devdotto&logoColor=white" alt="Dev.to" />
+    </a>
+    <a href="https://open.spotify.com/user/rootchips" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+      <img src="https://img.shields.io/badge/Spotify-1DB954?style=for-the-badge&logo=spotify&logoColor=white" alt="Spotify" />
+    </a>
+  </p>
 
   ---
   > “The best way to predict the future is to invent it” - Alan Kay
