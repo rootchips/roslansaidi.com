@@ -1,5 +1,5 @@
 ---
-title: "Weird but dangerous!"
+title: "Clever but risky Elixir patterns"
 description: Selective receive is a hidden Elixir behavior where a process looks through its waiting messages for one match, while the other messages stay there and can slowly make the process slower.
 date: 2026-04-17
 image: https://images.unsplash.com/photo-1646514626278-ff2ae5e88f0d?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
@@ -19,7 +19,7 @@ receive do
 end
 ```
 
-Kinda looks simple. But the weird part is, if the mailbox already has many other messages that do not match `{:ok, data}`, Elixir will scan through them one by one until it finds the matching one. Those unmatched messages are not removed. So over time, the process mailbox can fill with useless messages and every receive becomes slower. That is what makes it dangerous:
+Kinda looks simple. But the weird part is, if the mailbox already has many other messages that do not match `{:ok, data}`, Elixir will scan through them one by one until it finds the matching one. Those unmatched messages are not removed. So over time, the process mailbox can fill with useless messages and every receive becomes slower. That is what makes it risky:
 the code looks correct, but the process becomes slow quietly.
 
 ### Why some of us miss it?
@@ -43,5 +43,5 @@ send(pid, {:debug, 123})
 send(pid, {:result, 42})
 ```
 
-### Conclusion
-Selective receive is dangerous because it fails silently. The code still works, but the mailbox slowly poisons the process.
+### TLDR
+Selective receive is risky because it fails silently. The code still works, but the mailbox slowly poisons the process.
