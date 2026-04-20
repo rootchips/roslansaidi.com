@@ -19,7 +19,7 @@ Masking or removing this header helps make fingerprinting your server slightly m
 
 ---
 
-## Step 1 — Upgrade NGINX to the Latest Stable
+## Upgrade NGINX to the Latest Stable
 
 First, install the required dependency and prepare your system:
 
