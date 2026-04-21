@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     "nuxt-og-image",
     "motion-v/nuxt",
     "nuxt-gtag",
+    "nuxt-studio",
   ],
   content: {
     build: {

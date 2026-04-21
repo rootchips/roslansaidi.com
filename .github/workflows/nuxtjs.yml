@@ -34,6 +34,39 @@ jobs:
       - name: Ensure Nuxt modules
         run: npm install @nuxt/image @nuxt/content @nuxt/ui @vueuse/nuxt nuxt motion-v nuxt-og-image
 
+      - name: Create build .env
+        env:
+          SITE_URL_FROM_VAR: ${{ vars['NUXT_PUBLIC_SITE_URL'] }}
+          SITE_URL_FROM_SECRET: ${{ secrets['NUXT_PUBLIC_SITE_URL'] }}
+          USERNAME_FROM_VAR: ${{ vars['USERNAME'] }}
+          USERNAME_FROM_SECRET: ${{ secrets['USERNAME'] }}
+          PASSWORD_FROM_VAR: ${{ vars['PASSWORD'] }}
+          PASSWORD_FROM_SECRET: ${{ secrets['PASSWORD'] }}
+        run: |
+          SITE_URL="${SITE_URL_FROM_VAR:-$SITE_URL_FROM_SECRET}"
+          USERNAME_VALUE="${USERNAME_FROM_VAR:-$USERNAME_FROM_SECRET}"
+          PASSWORD_VALUE="${PASSWORD_FROM_VAR:-$PASSWORD_FROM_SECRET}"
+
+          if [ -z "$USERNAME_VALUE" ]; then
+            echo "::error::Missing USERNAME. Set vars.USERNAME or secrets.USERNAME in GitHub Actions settings."
+            exit 1
+          fi
+
+          if [ -z "$PASSWORD_VALUE" ]; then
+            echo "::error::Missing PASSWORD. Set vars.PASSWORD or secrets.PASSWORD in GitHub Actions settings."
+            exit 1
+          fi
+
+          if [ -z "$SITE_URL" ]; then
+            SITE_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          fi
+
+          cat << EOF > .env
+          NUXT_PUBLIC_SITE_URL=$SITE_URL
+          USERNAME=$USERNAME_VALUE
+          PASSWORD=$PASSWORD_VALUE
+          EOF
+
       - name: Generate static site
         run: npm run generate
 
