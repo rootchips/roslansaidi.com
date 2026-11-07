@@ -24,17 +24,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Ensure Nuxt modules
-        run: npm install @nuxt/image @nuxt/content @nuxt/ui @vueuse/nuxt nuxt motion-v nuxt-og-image
+        run: pnpm install --frozen-lockfile
 
       - name: Create build .env
         env:
@@ -70,7 +71,7 @@ jobs:
           EOF
 
       - name: Generate static site
-        run: npm run generate
+        run: pnpm generate
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
