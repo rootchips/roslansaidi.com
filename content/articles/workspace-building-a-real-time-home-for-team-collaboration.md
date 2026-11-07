@@ -1,9 +1,9 @@
 ---
-title: "Workspace: Building a Real-Time Home for Team Collaboration"
-description: A full-stack case study in collaborative editing, resilient synchronization, and thoughtful product design.
+title: "Workspace: Building a real-time collaboration app"
+description: How I built Workspace with Next.js and Elixir, and what I learned about editing together, offline changes, and keeping everyone's work safe.
 date: 2026-11-08
 image: /images/workspace/kanban.png
-minRead: 8
+minRead: 6
 author:
   name: Roslan Saidi
   avatar:
@@ -11,138 +11,135 @@ author:
     alt: Roslan Saidi
 ---
 
-Workspace brings documents, whiteboards, and task boards into one shared environment. Teams can write a brief, sketch an idea, discuss the details, and organize the work without switching between disconnected tools.
+Workspace is an app I built where people can write documents, draw on a whiteboard, and manage tasks together. The idea is simple: keep the discussion, the plan, and the tasks in the same place.
 
-The project combines **Next.js, React, TypeScript, Tailwind CSS, Tiptap, Yjs, Elixir/Phoenix, PostgreSQL, Redis, IndexedDB, and Docker Compose**. My focus was the connection between the interface and the distributed system underneath it: collaboration should feel immediate, while permissions, persistence, and recovery remain dependable.
+I used **Next.js, React, TypeScript, and Tailwind CSS** for the frontend, with **Elixir/Phoenix** for the backend. For the editor and live changes, I used **Tiptap and Yjs**. PostgreSQL stores the data, Redis handles PubSub and presence, and Docker Compose brings the services together.
 
-> All screenshots show the running application with portfolio demonstration content and the existing demo accounts: Roslan Saidi, Sabrina Shahril, and Mocha Ochi. They are actual interface captures, not design mockups or customer data.
+There are quite a few parts here. But the main question was pretty simple: what happens when two people change something at the same time? And what happens if one of them loses their connection?
 
-## The Problem: Shared Work Needs Shared Context
+Those questions are where most of the interesting work came from.
 
-A team's work rarely fits into a single format. A written plan needs discussion. A rough idea needs room to become a diagram. A decision eventually needs an owner and a place on the task board.
+*The screenshots in this article are from the running app, using demo accounts and sample content.*
 
-The challenge was to connect these activities without making the product feel crowded. It was also a technical challenge: two people should be able to edit together, recover from an interrupted connection, and understand what their teammates are doing without replacing a teammate's document with a stale copy.
+## What can you do in Workspace?
 
-I built around three priorities:
+There are three main types of spaces: documents, whiteboards, and Kanban boards.
 
-- **A consistent experience:** familiar navigation, controls, sharing, and history across different kinds of spaces.
-- **Collaboration people can see:** live cursors, contextual activity, comments, and drag previews.
-- **Recovery people can trust:** local persistence, retry-safe updates, explicit permissions, and guarded version restoration.
+The home page lists your spaces. There is also Recent to find something you just opened, categories to organise things, and Trash if you need to recover a deleted space.
 
-## One Workspace, Three Ways to Work
+![Workspace Home showing navigation, recent activity, and spaces](/images/workspace/home.png)
 
-Home provides a clear entry point into the product. Recent helps people return to their work, personal categories organize spaces, and Trash provides a recovery path for deleted content. Search and the command palette make larger workspaces easier to navigate.
+### Write a document together
 
-![Workspace Home showing shared navigation, workspace counts, recent activity, and organized spaces](/images/workspace/home.png)
+The editor supports headings, lists, checklists, tables, code blocks, and image attachments. People can edit the same document and leave comments beside it.
 
-*Home, Recent, Trash, and Kanban use the same content width and responsive gutters, making navigation feel consistent.*
+You can also select some text and comment on that part. This helps when someone asks for a change. They can point to the exact sentence instead of saying “the paragraph somewhere near the bottom”.
 
-### Documents for Shared Understanding
+Mentions create a notification, and clicking it brings you back to the discussion.
 
-The document editor supports structured writing with headings, lists, checklists, tables, code blocks, and private image attachments. Comments and replies keep discussion close to the work; selected-text anchors help people refer to a specific passage instead of describing its location.
+![A document in Workspace with a teammate's comment](/images/workspace/editor.png)
 
-Structured mentions connect comments to the notification inbox. Notifications can take a recipient back to the exact discussion, including a reply or a resolved thread.
+### Sketch an idea
 
-![A launch brief in the collaborative document editor with a teammate's comment](/images/workspace/editor.png)
+Sometimes a document is not enough to explain an idea. The whiteboard lets you add sticky notes, shapes, text, images, drawings, and arrows.
 
-*Writing and feedback sit together, with a shared editor and a dedicated discussion panel.*
+Arrows stay connected when you move a shape. You can also group items, align them, undo changes, and export the board.
 
-### Whiteboards for Exploring Ideas
+One detail here: zoom and position belong to each user. If I zoom in to read a sticky note, it should not change your view. But if I move the sticky note itself, everyone should see that change.
 
-Whiteboards provide a spatial alternative to a document. Teams can arrange sticky notes, text, shapes, images, drawings, and connectors. Connected arrows follow their shapes, while local pan and zoom let each person explore independently.
+![A whiteboard with connected shapes and sticky notes](/images/workspace/whiteboard.png)
 
-The board includes grouping, alignment, styling, undo/redo, and export. The important distinction is between shared content and personal view state: moving a shape is collaborative; changing your zoom should not move anyone else's view.
+### Keep track of tasks
 
-![A collaborative whiteboard mapping discovery, design, and delivery with connected shapes and sticky notes](/images/workspace/whiteboard.png)
+The Kanban board has three columns: **To do, In progress, and Done**. Each card can have a description, an assigned member, a priority, and a due date.
 
-*A customer journey combines a high-level flow with the questions and decisions behind it.*
+There are filters and a My tasks view to make the board easier to use when more cards are added. Assigning someone sends them an in-app notification with a link to the card. Assigning yourself does not send an alert.
 
-### Kanban for Turning Decisions into Action
+I also kept new cards as drafts until they are created. If you open the form and cancel, it should not leave an empty card on the board. Small thing, but it would be annoying otherwise.
 
-Kanban adds a delivery workflow with **To do, In progress, and Done**. Cards carry descriptions, member assignments, priorities, and due dates. Search, priority filters, My tasks, completion progress, and quick complete/reopen controls help people focus on the next action.
+## Showing someone dragging a card
 
-The card form uses an explicit draft: cancelling a new card does not leave an empty task behind. Existing cards save as people edit. Priority uses green, amber, and red alongside text labels, so colour is not the only signal.
+Moving a card sounds straightforward. You drag it, release it, and everyone sees the new position.
 
-Assigning a teammate creates a durable bell notification with a link to the exact card. Self-assignment stays quiet, and retried updates do not produce duplicate alerts.
+But what does the other person see while you are still holding it?
 
-## Making Collaboration Visible Without Getting in the Way
+If the app only sends the final position, they have no idea you are moving anything until the card suddenly changes place. So I added a live preview. Other users can see your name on the card you are holding, along with a marker showing where you plan to drop it.
 
-An early distinction became important: synchronizing the final result is different from showing the interaction as it happens.
+![Another user's view of Roslan dragging a Kanban card](/images/workspace/live-drag.png)
 
-A card can move correctly after release while still leaving teammates unaware that someone is dragging it. Workspace therefore sends a small, temporary drag preview: a named outline identifies the held card, and a named insertion marker shows the proposed destination before the drop.
+The preview sends small updates at a limited rate. It also sends a regular signal while the card is held, even if the mouse stops moving. If the user disconnects, the preview expires so it does not stay on screen forever.
 
-![A teammate's view of a live Kanban drag, showing the held card and proposed drop position](/images/workspace/live-drag.png)
+This is temporary activity. It does not need to be saved in the document history. The final card position does.
 
-*The receiving user's view shows Roslan dragging a card before its durable position changes.*
+## How the updates work
 
-The insertion marker stays thin so it does not cover the card being targeted. Preview messages are throttled and validated. A heartbeat keeps a stationary held drag visible, while explicit cleanup and expiry prevent abandoned previews from lingering.
+Yjs handles merging changes when people edit at the same time. Phoenix handles the connection, checks permissions, and saves accepted updates to PostgreSQL.
 
-These cues are **presence**, not document content. They do not belong in saved revisions or the durable update log.
+The browser also keeps a local copy in **IndexedDB**. This lets a user keep their edits locally and reopen a space they have visited before when the connection is down.
 
-## The Architecture Behind the Experience
+A separate Yjs worker handles things like combining older updates into snapshots and checking task assignment changes. Redis supports PubSub, presence, and rate limiting.
 
-The stack has clear responsibilities:
+Each update gets an ID from the browser. That matters when the connection drops at an awkward moment.
 
-| Layer | Responsibility |
-| --- | --- |
-| Next.js, React, and Tiptap | Application interface, navigation, and rich-text interaction |
-| Yjs | Concurrent content changes and conflict resolution |
-| IndexedDB and the service worker | Local edits and reopening previously visited spaces during an outage |
-| Phoenix and Phoenix Channels | Authentication, authorization, transport, update sequencing, and application workflows |
-| PostgreSQL | Durable accounts, permissions, metadata, updates, snapshots, comments, revisions, and notifications |
-| Redis | Replaceable PubSub, presence infrastructure, and rate-limit state |
-| Trusted Yjs worker | Snapshot compaction, state-vector diffs, and assignment-notification projection |
+For example:
 
-The browser synchronizes with Phoenix over HTTP and Channels, while keeping local state in IndexedDB. Phoenix coordinates PostgreSQL persistence, Redis PubSub, and the trusted Yjs worker.
+1. You make a change.
+2. The server saves it.
+3. Your connection drops before the server can confirm it.
+4. Your browser sends the same update again after reconnecting.
 
-Phoenix stores CRDT updates as opaque binary payloads. It authorizes a write, allocates its server sequence transactionally, persists it, and then acknowledges or broadcasts it. Yjs handles how concurrent content changes merge.
+Without a way to recognise that update, the server could save it twice. Using the same ID lets it recognise the retry.
 
-Each update has a stable client-generated ID. If a connection drops after the server accepts an update but before the client receives the acknowledgement, the client can retry without creating a second logical update.
+## What happens when you go offline?
 
-## The Engineering Challenges That Shaped the Product
+Keeping the page open is only one part of offline support. The harder part is reconnecting without losing what anyone wrote.
 
-### Reconnecting Without Replacing Someone Else's Work
+Imagine you edit a document offline while your teammate keeps editing online. When you come back, sending your whole copy over theirs would lose their changes. Workspace uses Yjs to merge the changes instead.
 
-Offline support needs more than a cached interface. Local changes must survive a reload, and reconnecting clients must merge with the server's snapshot and update tail rather than replace newer content.
+Local data is kept separately for each user and space. Previously opened spaces can work offline, but opening a space for the first time still needs a connection. Uploads and permission changes also need to be online.
 
-Workspace partitions browser persistence by user and space. Previously opened spaces can reopen offline, while the collaboration provider reconciles server state and local work on reconnect. First-time access, uploads, and permission changes still require connectivity.
+## A few things that needed extra care
 
-### Notifications From Collaborative State
+### Sending notifications once
 
-Assignment alerts need durable delivery, but temporary drag previews do not. Treating them as the same kind of event would either lose useful notifications or persist unnecessary interaction data.
+A task assignment should create a notification even if processing fails and needs to retry. But the retry should not send the same alert again.
 
-For assignments, Phoenix writes a PostgreSQL outbox job in the same transaction as the accepted update. The trusted Yjs worker derives assignment transitions in order. Projection progress, alert changes, and job removal commit together, allowing failed processing to retry without duplicating alerts. The queued payloads also preserve pending work when the main update log is compacted.
+When Phoenix accepts an update, it saves a notification job in the same database transaction. The Yjs worker checks the assignment changes and processes the job. The notification and the job's completion are saved together, so a failed attempt can be retried safely.
 
-### History That Does Not Silently Overwrite a Teammate
+There is more going on behind the bell icon than it first seems.
 
-Named versions can be previewed without changing the live space. A restore is prepared separately and submitted with an expected server sequence. If someone edits before it commits, the restore is rejected for review rather than replacing that newer state.
+### Restoring an older version
 
-A successful restore creates a backup of the previous version. Comments, sharing permissions, and the space title remain separate from content restoration.
+You can preview a saved version before restoring it. But someone else might still be editing the current version while you are looking at the old one.
 
-### Permissions That Apply Beyond the Interface
+The restore checks whether new updates have arrived. If they have, it stops and asks for review. Otherwise, restoring could quietly replace work your teammate just added.
 
-Owners, editors, commenters, and viewers have different capabilities. Those rules are checked in Phoenix, not just represented by disabled buttons. Membership is rechecked on channel operations and reconnects, and private notification queries use current access.
+A successful restore also creates a backup of the previous content. Comments, sharing settings, and the space title are kept separately.
 
-![Workspace sharing dialog showing people with access and role controls](/images/workspace/sharing.png)
+### Checking access on the server
 
-*Sharing makes the access model visible while server-side checks enforce it.*
+Workspace has owners, editors, commenters, and viewers. Hiding an edit button is useful for the interface, but the server still needs to check what each person is allowed to do.
 
-## A Calm, Consistent Interface
+Phoenix checks permissions on channel operations and reconnects. Notifications also check current access, so an old notification does not give someone access to a space they can no longer open.
 
-The visual system uses cream surfaces, purple accents, DM Sans interface text, and Newsreader titles. Shared modal headers, field styling, buttons, feedback messages, and responsive spacing help the three space types feel like one product.
+![The sharing dialog with members and their access roles](/images/workspace/sharing.png)
 
-Light and dark themes retain the same hierarchy. On mobile, controls wrap and boards stack within the viewport. Motion is purposeful and respects reduced-motion preferences. The bell's refresh animation is limited to two ringing cycles when unread notifications exist, rather than restarting whenever the user changes pages.
+## The interface
+
+I used cream backgrounds, purple accents, DM Sans for the interface, and Newsreader for titles. Documents, whiteboards, and task boards share the same navigation and controls, so users do not need to learn everything again when switching spaces.
+
+There are light and dark themes, plus layouts for smaller screens. Animations also respect the user's reduced-motion setting.
 
 | Dark theme | Mobile layout |
 | --- | --- |
-| <img src="/images/workspace/dark-mode.png" width="640" alt="Kanban board in Workspace’s dark theme"> | <img src="/images/workspace/mobile.png" width="200" alt="Workspace Home on a mobile viewport"> |
+| <img src="/images/workspace/dark-mode.png" width="640" alt="Workspace Kanban board in dark mode"> | <img src="/images/workspace/mobile.png" width="200" alt="Workspace Home on mobile"> |
 
-## Verification and What I Learned
+## What I learned
 
-The project includes automated checks for CRDT convergence, offline replay, duplicate delivery, presence scheduling, role enforcement, snapshot compaction, and notification behavior. Browser scenarios exercise real interactions across independent users, including drag-and-drop, live previews, discussion navigation, and desktop/mobile layouts.
+The backend verification recorded **104 passing tests**. The checks cover things like merging edits, replaying offline changes, duplicate updates, permissions, snapshots, and notifications. There are separate browser and multi-node recovery checks too.
 
-The recorded backend verification includes **104 passing tests**. The project also has optional full-browser and multi-node recovery checks, which run separately from the backend suite.
+The part that stood out to me was how much happens between making a change and seeing it on another screen. A card can end up in the right place, but the experience still feels confusing if nobody can see who is moving it.
 
-The biggest lesson was that real-time software needs two kinds of correctness: the data must converge, and the interface must make the current situation understandable. A correct final card position is only part of the experience. People also need to see who is holding the card, where it is going, and whether their work is safely synchronized.
+The same goes for saving. People need their work to survive a disconnect, and reconnecting should not mean choosing whose changes to throw away.
 
-Workspace is a working full-stack project, with room to grow. Kanban currently has three fixed columns, assignment delivery is in-app, and first-time offline access is outside the supported flow. The result demonstrates a connected set of product and engineering decisions: one interface for shared context, backed by explicit ownership, resilient synchronization, and recoverable state.
+There are still limits. Kanban has three fixed columns, notifications stay inside the app, and you cannot open a new space offline. But building Workspace gave me a better understanding of how the editor, the connection, and the database need to work together. Even a small action like assigning a task can involve all three.
