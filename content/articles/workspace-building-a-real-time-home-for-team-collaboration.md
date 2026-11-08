@@ -13,6 +13,8 @@ author:
 
 Workspace is an app I built where people can write documents, draw on a whiteboard, and manage tasks together. The idea is simple: keep the discussion, the plan, and the tasks in the same place.
 
+You can [try Workspace for yourself](https://workspace.roslansaidi.com). Invite a friend and see what happens when you both edit at the same time.
+
 I used **Next.js, React, TypeScript, and Tailwind CSS** for the frontend, with **Elixir/Phoenix** for the backend. For the editor and live changes, I used **Tiptap and Yjs**. PostgreSQL stores the data, Redis handles PubSub and presence, and Docker Compose brings the services together.
 
 There are quite a few parts here. But the main question was pretty simple: what happens when two people change something at the same time? And what happens if one of them loses their connection?
