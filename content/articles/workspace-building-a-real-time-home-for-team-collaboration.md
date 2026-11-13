@@ -1,5 +1,5 @@
 ---
-title: "Workspace: Building a real-time collaboration app"
+title: "Workspace: Part 1 - Building a real-time collaboration app"
 description: How I built Workspace with Next.js and Elixir, and what I learned about editing together, offline changes, and keeping everyone's work safe.
 date: 2026-11-08
 image: /images/workspace/kanban.png
