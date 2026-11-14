@@ -17,15 +17,15 @@ I added audio and video calls to Workspace. Members can talk while working in a 
 
 ## Using the call
 
-The video button shows how many people are in the call. You can see their names before joining. On mobile, the button is under **More → Video call**.
+The video button shows how many people are in the call. You can see their names before joining. On mobile, the button is under "More → Video call".
 
-Opening the panel does not turn on your camera or microphone. Both start off, and you choose **Join call** to connect. Invitations also need your approval.
+Opening the panel does not turn on your camera or microphone. Both start off, and you choose "Join call" to connect. Invitations also need your approval.
 
-You can minimise the call or move between spaces while staying connected. Each user can only be in one call at a time. Other spaces show **User is busy** if they are already talking elsewhere.
+You can minimise the call or move between spaces while staying connected. Each user can only be in one call at a time. Other spaces show "User is busy" if they are already talking elsewhere.
 
 ## How I built it
 
-I added **LiveKit** to handle the calls. It uses **WebRTC**, which lets browsers send live audio and video.
+I added LiveKit to handle the calls. It uses WebRTC, which lets browsers send live audio and video.
 
 The app checks whether someone is a member of the space before letting them join. LiveKit handles the media, while shared editing continues through the existing system.
 
