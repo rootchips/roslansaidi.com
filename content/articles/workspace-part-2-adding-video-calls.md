@@ -1,4 +1,3 @@
-
 ---
 title: "Workspace: Part 2 - Bringing video calls into Workspace"
 description: Talk, share ideas, and work together without leaving your shared space. Here's how I added video calls to Workspace using LiveKit and WebRTC.
