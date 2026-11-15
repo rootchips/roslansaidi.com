@@ -23,7 +23,7 @@ Now, members can talk while working on the same document, whiteboard, or task bo
 
 The video button shows how many people are currently in the call. You can also see who is there before joining.
 
-Using a phone? The button is available under **More → Video call**.
+Using a phone? The button is available under "More → Video call".
 
 Opening the call panel does not turn on your camera or microphone. Everything stays off until you choose to join.
 
@@ -37,7 +37,7 @@ A few things to know:
 
 ## How it works behind the scenes
 
-I used **LiveKit** to handle audio and video calls. Under the hood, it uses WebRTC to send live audio and video between users.
+I used LiveKit to handle audio and video calls. Under the hood, it uses WebRTC to send live audio and video between users.
 
 The app checks whether a user is a member of the space before allowing them to join. Once approved, LiveKit takes care of the media connection.
 
