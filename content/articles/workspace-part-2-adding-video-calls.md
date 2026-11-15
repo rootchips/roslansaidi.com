@@ -1,6 +1,7 @@
+
 ---
-title: "Workspace: Part 2 - Adding video calls"
-description: Adding video calls to Workspace with LiveKit and WebRTC.
+title: "Workspace: Part 2 - Bringing video calls into Workspace"
+description: Talk, share ideas, and work together without leaving your shared space. Here's how I added video calls to Workspace using LiveKit and WebRTC.
 date: 2026-11-15
 image: /images/workspace/video-call-preview.png
 minRead: 2
@@ -11,31 +12,58 @@ author:
     alt: Roslan Saidi
 ---
 
-I added audio and video calls to Workspace. Members can talk while working in a shared document, whiteboard, or task board.
+Work is not always about typing messages or writing things down. Sometimes, it's easier to jump on a call and discuss things together.
+
+So, I added audio and video calls to Workspace.
+
+Now, members can talk while working on the same document, whiteboard, or task board. No need to switch between different apps just to discuss an idea.
 
 ![Workspace's Conversation preview showing a document beside the video call panel.](/images/workspace/video-call-preview.png)
 
-## Using the call
+## Let's start a call
 
-The video button shows how many people are in the call. You can see their names before joining. On mobile, the button is under "More → Video call".
+The video button shows how many people are currently in the call. You can also see who is there before joining.
 
-Opening the panel does not turn on your camera or microphone. Both start off, and you choose "Join call" to connect. Invitations also need your approval.
+Using a phone? The button is available under **More → Video call**.
 
-You can minimise the call or move between spaces while staying connected. Each user can only be in one call at a time. Other spaces show "User is busy" if they are already talking elsewhere.
+Opening the call panel does not turn on your camera or microphone. Everything stays off until you choose to join.
 
-## How I built it
+You can also minimise the call and continue working in other spaces without disconnecting.
 
-I added LiveKit to handle the calls. It uses WebRTC, which lets browsers send live audio and video.
+A few things to know:
+- You need to be a member of the space to join its call.
+- Invitations must be accepted before joining.
+- Each user can only join one call at a time.
+- If someone is already in another call, their status will show as "User is busy".
 
-The app checks whether someone is a member of the space before letting them join. LiveKit handles the media, while shared editing continues through the existing system.
+## How it works behind the scenes
 
-I kept the call outside the individual space page so navigating to another space would not disconnect it.
+I used **LiveKit** to handle audio and video calls. Under the hood, it uses WebRTC to send live audio and video between users.
 
-## Limits
+The app checks whether a user is a member of the space before allowing them to join. Once approved, LiveKit takes care of the media connection.
 
-Call quality depends on the internet connection and device. More people with cameras on means more data to send and more work for the server and each device.
+The interesting part is that calls work separately from individual space pages.
 
-There is no single user count that guarantees a smooth call. Video quality, other active calls, and shared server resources all affect capacity. Larger groups need testing before increasing the call limit.
+This means you can move between spaces, open another document, or check your task board while staying connected to the same call.
 
-Have a plan to discuss? [Try Workspace](https://workspace.roslansaidi.com) with a friend or teammate. Open a shared space, invite them, and start a call. You can write down decisions, sketch an idea, or turn the next step into a task while you talk.
+Meanwhile, shared editing continues to work through the existing system.
 
+## What about performance?
+
+Video calls use quite a lot of network and device resources.
+
+The more people who turn on their cameras, the more data needs to be sent and processed. Call quality also depends on internet speed, device performance, video quality, and server resources.
+
+There isn't a fixed number of users that guarantees a smooth call.
+
+For larger groups, I'll need to run more tests before increasing the call limit.
+
+## Give it a try
+
+Have something to discuss? [Try Workspace](https://workspace.roslansaidi.com) with a friend or teammate.
+
+Open a shared space, invite someone, and start a call.
+
+Write down your ideas, sketch something on the whiteboard, or turn your discussion into tasks. Everything happens in one place.
+
+That's the idea behind Workspace. **Less switching between apps, more getting things done together.**
