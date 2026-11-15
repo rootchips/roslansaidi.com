@@ -64,5 +64,3 @@ Have something to discuss? [Try Workspace](https://workspace.roslansaidi.com) wi
 Open a shared space, invite someone, and start a call.
 
 Write down your ideas, sketch something on the whiteboard, or turn your discussion into tasks. Everything happens in one place.
-
-That's the idea behind Workspace. **Less switching between apps, more getting things done together.**
