@@ -1,6 +1,6 @@
 ---
 title: "Workspace: Part 1 - Building a real-time collaboration app"
-description: How I built Workspace with Next.js and Elixir, and what I learned about editing together, offline changes, and keeping everyone's work safe.
+description: How I built Workspace with Next.js and Elixir and what I learned about editing together, offline changes, and keeping everyone's work safe.
 date: 2026-11-08
 image: /images/workspace/kanban.png
 minRead: 6
@@ -15,7 +15,7 @@ Workspace is an app I built where people can write documents, draw on a whiteboa
 
 You can [try Workspace for yourself](https://workspace.roslansaidi.com). Invite a friend and see what happens when you both edit at the same time.
 
-I used **Next.js, React, TypeScript, and Tailwind CSS** for the frontend, with **Elixir/Phoenix** for the backend. For the editor and live changes, I used **Tiptap and Yjs**. PostgreSQL stores the data, Redis handles PubSub and presence, and Docker Compose brings the services together.
+I used Next.js and Tailwind CSS for the frontend, with Elixir/Phoenix for the backend. For the editor and live changes, I used Tiptap and Yjs. PostgreSQL stores the data and Redis handles PubSub and presence.
 
 There are quite a few parts here. But the main question was pretty simple: what happens when two people change something at the same time? And what happens if one of them loses their connection?
 
